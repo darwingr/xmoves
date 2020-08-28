@@ -1,0 +1,7 @@
+Copyright (C) 2020 Amisoft Consulting - All Rights Reserved
+
+Unauthorized copying of this software and associated documentation
+files (the "Software") via any medium is strictly prohibited.
+
+Proprietary and confidential
+Written by Darwin Jacob Groskleg <darwingroskleg@gmail.com>, August 2020
