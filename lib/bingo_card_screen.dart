@@ -1,5 +1,6 @@
-import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 
 
@@ -13,16 +14,22 @@ class ActivityCategory {
 }
 
 class Item {
+  int id;
   String title;
   String subtitle;
   String event = "Incomplete";
   String img;
   //Item({this.title, this.subtitle, this.event, this.img});
   Item(retitle) :
+    this.id = 0,
     this.title = retitle,
     this.subtitle = retitle,
     this.event = "Incomplete",
     this.img = "images/AppIcon-128.png";
+
+  String location() {
+    return "row ${this.id ~/ 10}, column ${this.id % 10}";
+  }
 }
 
 // Theme Data (hex format, precede with 0xff)
@@ -33,17 +40,93 @@ var light_blue = const Color(0xff4D6275);
 
 final toolbarTextStyle = TextStyle(color: Colors.white, fontSize: 16.0);
 
-class ActivityScreen extends StatelessWidget {
+class ActivityDetailsScreen extends StatelessWidget {
   @override
-  Widget build(BuildContext contex) {
+  Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
+
+    Widget titleSection = Container(
+      padding: const EdgeInsets.all(32),
+      child: Row(
+        children: [
+          Expanded(
+            /*1*/
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                /*2*/
+                Container(
+                  padding: const EdgeInsets.only(bottom: 8),
+                  child: Text(
+                    'Facetime workout w friend',
+                    // OR textTheme.headline5
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                Text(
+                  'sweat',
+                  // OR textTheme.subtitle1
+                  style: TextStyle(
+                    color: Colors.grey[500],
+                  ),
+                ),
+              ],
+            ),
+          ),
+          /*3*/
+          //Icon(
+          //  Icons.star,
+          //  color: Colors.red[500],
+          //),
+          //Text('41'),
+        ],
+      ),
+    );
+
+    Widget textSection = Container(
+      padding: const EdgeInsets.all(32),
+      child: Text(
+        'Do a workout with a friend over video chat.\n\n'
+        'Lake Oeschinen lies at the foot of the Blüemlisalp in the Bernese '
+            'Alps. Situated 1,578 meters above sea level, it is one of the '
+            'larger Alpine Lakes. A gondola ride from Kandersteg, followed by a '
+            'half-hour walk through pastures and pine forest, leads you to the '
+            'lake, which warms to 20 degrees Celsius in the summer. Activities '
+            'enjoyed here include rowing, and riding the summer toboggan run.',
+      softWrap: true,
+      //style: textTheme.bodyText1
+      ),
+    );
+
     return PlatformScaffold(
-      //appBar: PlatformAppBar(title: Text("Sendon Route")),
-      body: Center(
-          child: RaisedButton(
+      // Goback '<' arrow also shows in header, done by PlatformAppBar
+      appBar: PlatformAppBar(title: PlatformText("Activity Details")),
+      // Button is either
+      // - the whole screen
+      // - or same color as background
+      body: ListView(
+        children: <Widget>[
+          // Activity Title
+          // Subtitle: Category of activity
+          titleSection,
+          // Description text
+          textSection,
+          // Click to mark complete
+          //buttonSection,
+          Center(
+            child: PlatformButton(
+              color: Colors.white,
               onPressed: () {
-                print("Going back");
+                print("Completed!");
+                Navigator.pop(context);
               },
-              child: PlatformText('Go back!'))
+              child: PlatformText('Complete',
+                style: TextStyle(color: Colors.black))
+            )
+          )
+        ]
       )
     );
   }
@@ -71,11 +154,11 @@ class BingoCardScreen extends StatelessWidget {
       //  ),
       //),
       backgroundColor: light_blue,
-      body: _buildBingoCardContent(),
+      body: _buildBingoCardContent(context),
     );
   }
 
-  _buildBingoCardContent() {
+  _buildBingoCardContent(BuildContext context) {
     return Column( children: <Widget>[
       SizedBox(height: 24),
       // Screen's Title
@@ -92,18 +175,31 @@ class BingoCardScreen extends StatelessWidget {
           style: TextStyle(
             color: Colors.black))),
       SizedBox(height: 18),
-      _buildBingoCard_asGridView()]);
+      _buildBingoCard_asGridView(context)]);
   }
 
-  _buildBingoCard_asGridView() {
+  _buildBingoCard_asGridView(BuildContext context) {
     var categories = <String>["Sweat", "Reflect/Relax", "Focus", "Move",
                               "Explore"];
     var myList = <Item>[];
     for (int i=0; i<5; i++) {
-      myList.addAll(categories.map( (c) => Item(c) ));
+      for (int j=0; j<5; j++) {
+        //myList.addAll(categories.map( (c) => Item(c) ));
+        var activity = Item(categories[j]);
+        activity.id = ((i+1) * 10) + j+1;
+        myList.add(activity);
+      }
     }
     buildActivitySquare(Item data) {
-      return Container(
+      return Material(child: InkWell(
+        onTap: () {
+          print("Going to activity details from ${data.location()}");
+          Navigator.push(context, platformPageRoute(
+            builder: (context) => ActivityDetailsScreen(),
+            context: context
+          ));
+        },
+        child: Container(
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(10)),
@@ -146,7 +242,8 @@ class BingoCardScreen extends StatelessWidget {
               //),
             ]
           ),
-      );
+        )
+      ));
     }
 
     return Flexible(
