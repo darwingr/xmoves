@@ -103,9 +103,6 @@ class ActivityDetailsScreen extends StatelessWidget {
     return PlatformScaffold(
       // Goback '<' arrow also shows in header, done by PlatformAppBar
       appBar: PlatformAppBar(title: PlatformText("Activity Details")),
-      // Button is either
-      // - the whole screen
-      // - or same color as background
       body: ListView(
         children: <Widget>[
           // Activity Title
