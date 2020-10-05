@@ -188,7 +188,7 @@ class BingoCardScreen extends StatelessWidget {
       }
     }
     buildActivitySquare(Item data) {
-      return Material(child: InkWell(
+      return GestureDetector(
         onTap: () {
           print("Going to activity details from ${data.location()}");
           Navigator.push(context, platformPageRoute(
@@ -240,7 +240,7 @@ class BingoCardScreen extends StatelessWidget {
             ]
           ),
         )
-      ));
+      );
     }
 
     return Flexible(
