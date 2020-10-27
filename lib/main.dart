@@ -53,8 +53,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return PlatformApp(
       debugShowCheckedModeBanner: false,
-      android: (_) => MaterialAppData(theme: materialThemeData),
-      ios:    (_) => CupertinoAppData(theme: cupertinoTheme),
+      material: (_, __) => MaterialAppData(theme: materialThemeData),
+      cupertino:(_, __) => CupertinoAppData(theme: cupertinoTheme),
       title: 'X-Moves',
       home: MyHomePage(title: 'X-Moves'),
     );
@@ -98,7 +98,7 @@ class _MyHomePageState extends State<MyHomePage> {
         // Here we take the value from the MyHomePage object that was created by
         // the App.build method, and use it to set our appbar title.
         title: Text(widget.title, style: toolbarTextStyle),
-        ios: (_) => CupertinoNavigationBarData(
+        cupertino: (_, __) => CupertinoNavigationBarData(
           transitionBetweenRoutes: false,
           trailing: PlatformButton(
             padding: EdgeInsets.all(4.0),
@@ -125,7 +125,7 @@ class _MyHomePageState extends State<MyHomePage> {
         // Here we take the value from the MyHomePage object that was created by
         // the App.build method, and use it to set our appbar title.
         title: Text(widget.title, style: toolbarTextStyle),
-        ios: (_) => CupertinoNavigationBarData(
+        cupertino: (_, __) => CupertinoNavigationBarData(
           transitionBetweenRoutes: false,
           trailing: PlatformButton(
             padding: EdgeInsets.all(4.0),
