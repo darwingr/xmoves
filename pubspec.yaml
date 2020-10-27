@@ -60,7 +60,8 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-    - images/AppIcon-128.png
+    - assets/images/AppIcon-128.png
+    - assets/icon/icon.png
     - assets/data/bingo_card_activities.csv
 
   # An image asset can refer to one or more resolution-specific "variants", see

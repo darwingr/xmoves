@@ -20,7 +20,7 @@ class Item {
         this.title = title,
         this.subtitle = title,
         this.event = "Incomplete",
-        this.img = "images/AppIcon-128.png";
+        this.img = "assets/images/AppIcon-128.png";
 
   String location() {
     return "row ${this.id ~/ 10}, column ${this.id % 10}";
