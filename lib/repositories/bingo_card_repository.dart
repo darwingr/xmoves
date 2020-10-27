@@ -38,15 +38,13 @@ class BingoCardRepository {
     var activityData = csv.where((row) => row[cardIdColumnIdx] == targetID);
 
     // better be only 25, not less
-    List<BingoCardActivity> activities = List.from(
-      activityData.map( (a) {
-        return BingoCardActivity(
-            location: a[headerMap['location']],
-            title: a[headerMap['title']],
-            instructions: a[headerMap['instructions']],
-            category: a[headerMap['category']]);
-      }),
-      growable: false);
+    List<BingoCardActivity> activities = List.from(activityData.map((a) {
+      return BingoCardActivity(
+          location: a[headerMap['location']],
+          title: a[headerMap['title']],
+          instructions: a[headerMap['instructions']],
+          category: a[headerMap['category']]);
+    }), growable: false);
 
     activities.sort(BingoCardActivity.Comparator);
 
@@ -71,4 +69,3 @@ class BingoCardRepository {
     //    .toList();
   }
 }
-

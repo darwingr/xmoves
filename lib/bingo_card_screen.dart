@@ -15,12 +15,12 @@ class Item {
   String event = "Incomplete";
   String img;
   //Item({this.title, this.subtitle, this.event, this.img});
-  Item(var title) :
-    this.id = 0,
-    this.title = title,
-    this.subtitle = title,
-    this.event = "Incomplete",
-    this.img = "images/AppIcon-128.png";
+  Item(var title)
+      : this.id = 0,
+        this.title = title,
+        this.subtitle = title,
+        this.event = "Incomplete",
+        this.img = "images/AppIcon-128.png";
 
   String location() {
     return "row ${this.id ~/ 10}, column ${this.id % 10}";
@@ -49,15 +49,14 @@ class _BingoCardScreen extends State<BingoCardScreen> {
   void initState() {
     var useCase = BingoCardUseCase();
     useCase.playWithLatestBingoCard().then((bc) {
-      setState( () => _card_in_play = bc );
+      setState(() => _card_in_play = bc);
     });
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    if (_card_in_play == null)
-      return Container();
+    if (_card_in_play == null) return Container();
 
     print('gap');
 
@@ -68,30 +67,23 @@ class _BingoCardScreen extends State<BingoCardScreen> {
   }
 
   Widget _buildBingoCardContent(BuildContext context) {
-    return Column( children: <Widget>[
+    return Column(children: <Widget>[
       SizedBox(height: 24),
       // Screen's Title
       Container(
-        child: Text('Fitness Bingo',
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 45,
-            fontWeight: FontWeight.w800
-          )
-        )
-      ),
+          child: Text('Fitness Bingo',
+              style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 45,
+                  fontWeight: FontWeight.w800))),
       SizedBox(height: 14),
       // Card's Title
       Container(
-        child: Text(_card_in_play.title,
-          style: TextStyle(
-            color: Colors.black
-          )
-        )
-      ),
+          child:
+              Text(_card_in_play.title, style: TextStyle(color: Colors.black))),
       SizedBox(height: 18),
-      _buildBingoCard_asGridView(context)]
-    );
+      _buildBingoCard_asGridView(context)
+    ]);
   }
 
   Widget _buildBingoCard_asGridView(BuildContext context) {
@@ -103,51 +95,47 @@ class _BingoCardScreen extends State<BingoCardScreen> {
     }
     buildActivitySquare(Item data) {
       var activity = () {
-        var idx = _card_in_play.activities.indexWhere(
-                (e) => e.location == data.id);
+        var idx =
+            _card_in_play.activities.indexWhere((e) => e.location == data.id);
         return _card_in_play.activities.elementAt(idx);
       };
       return GestureDetector(
-        onTap: () {
-          print("Going to activity details from ${data.location()}");
-          Navigator.push(context, platformPageRoute(
-            builder: (context) => ActivityDetailsScreen(activity: activity()),
-            context: context
+          onTap: () {
+            print("Going to activity details from ${data.location()}");
+            Navigator.push(
+                context,
+                platformPageRoute(
+                    builder: (context) =>
+                        ActivityDetailsScreen(activity: activity()),
+                    context: context));
+          },
+          child: Container(
+            decoration: BoxDecoration(
+                color: Colors.white, borderRadius: BorderRadius.circular(10)),
+            child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  SizedBox(height: 8),
+                  Text(
+                    data.subtitle,
+                    style: TextStyle(
+                        color: Colors.black38,
+                        fontSize: 10,
+                        fontWeight: FontWeight.w600),
+                  ),
+                  SizedBox(height: 14),
+                ]),
           ));
-        },
-        child: Container(
-          decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(10)),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              SizedBox(height: 8),
-              Text(
-                data.subtitle,
-                style: TextStyle(
-                  color: Colors.black38,
-                  fontSize: 10,
-                  fontWeight: FontWeight.w600
-                ),
-              ),
-              SizedBox(height: 14),
-            ]
-          ),
-        )
-      );
     }
 
     return Flexible(
       child: GridView.count(
-        childAspectRatio: 1.0,
-        padding: EdgeInsets.only(left: 6, right: 6),
-        crossAxisCount: 5,
-        crossAxisSpacing: 3,
-        mainAxisSpacing: 5,
-        children: myList.map(buildActivitySquare).toList()
-      ),
+          childAspectRatio: 1.0,
+          padding: EdgeInsets.only(left: 6, right: 6),
+          crossAxisCount: 5,
+          crossAxisSpacing: 3,
+          mainAxisSpacing: 5,
+          children: myList.map(buildActivitySquare).toList()),
     );
   }
 }
-

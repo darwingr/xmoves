@@ -8,8 +8,7 @@ import 'bingo_card.dart';
 class ActivityDetailsScreen extends StatelessWidget {
   final BingoCardActivity activity;
 
-  ActivityDetailsScreen({Key key, @required this.activity})
-      : super(key: key);
+  ActivityDetailsScreen({Key key, @required this.activity}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -78,7 +77,7 @@ class ActivityDetailsScreen extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          _buildButtonColumn(buttonColor, Icons.call , 'CALL'),
+          _buildButtonColumn(buttonColor, Icons.call, 'CALL'),
           _buildButtonColumn(buttonColor, Icons.near_me, 'ROUTE'),
           _buildButtonColumn(buttonColor, Icons.share, 'SHARE'),
         ],
@@ -86,31 +85,26 @@ class ActivityDetailsScreen extends StatelessWidget {
     );
 
     return PlatformScaffold(
-      // Goback '<' arrow also shows in header, done by PlatformAppBar
+        // Goback '<' arrow also shows in header, done by PlatformAppBar
         appBar: PlatformAppBar(title: PlatformText("Activity Details")),
-        body: ListView(
-            children: <Widget>[
-              // Activity Title
-              // Subtitle: Category of activity
-              titleSection,
-              // Description text
-              textSection,
-              // Click to mark complete
-              //buttonSection,
-              Center(
-                  child: PlatformButton(
-                      color: Colors.white,
-                      onPressed: () {
-                        print("Completed!");
-                        Navigator.pop(context);
-                      },
-                      child: PlatformText('Complete',
-                          style: TextStyle(color: Colors.black))
-                  )
-              )
-            ]
-        )
-    );
+        body: ListView(children: <Widget>[
+          // Activity Title
+          // Subtitle: Category of activity
+          titleSection,
+          // Description text
+          textSection,
+          // Click to mark complete
+          //buttonSection,
+          Center(
+              child: PlatformButton(
+                  color: Colors.white,
+                  onPressed: () {
+                    print("Completed!");
+                    Navigator.pop(context);
+                  },
+                  child: PlatformText('Complete',
+                      style: TextStyle(color: Colors.black))))
+        ]));
   }
 
   Column _buildButtonColumn(Color color, IconData icon, String label) {
@@ -134,4 +128,3 @@ class ActivityDetailsScreen extends StatelessWidget {
     );
   }
 }
-

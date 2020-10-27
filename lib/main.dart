@@ -44,9 +44,7 @@ final bottomNavTextStyle = TextStyle(color: Colors.white, fontSize: 14.0);
 final toolbarButtonTextStyle = TextStyle(color: Colors.white, fontSize: 14.0);
 final toolbarTextStyle = TextStyle(color: Colors.black, fontSize: 16.0);
 
-
 void main() => runApp(MyApp());
-
 
 class MyApp extends StatelessWidget {
   @override
@@ -54,7 +52,7 @@ class MyApp extends StatelessWidget {
     return PlatformApp(
       debugShowCheckedModeBanner: false,
       material: (_, __) => MaterialAppData(theme: materialThemeData),
-      cupertino:(_, __) => CupertinoAppData(theme: cupertinoTheme),
+      cupertino: (_, __) => CupertinoAppData(theme: cupertinoTheme),
       title: 'X-Moves',
       home: MyHomePage(title: 'X-Moves'),
     );
@@ -103,10 +101,12 @@ class _MyHomePageState extends State<MyHomePage> {
           trailing: PlatformButton(
             padding: EdgeInsets.all(4.0),
             child: Icon(Icons.add, color: Colors.white),
-            onPressed: () { Navigator.push(context, platformPageRoute(
-                builder: (BuildContext context) => BingoCardScreen(),
-                context: context)
-              );
+            onPressed: () {
+              Navigator.push(
+                  context,
+                  platformPageRoute(
+                      builder: (BuildContext context) => BingoCardScreen(),
+                      context: context));
             },
           ),
         ),
@@ -121,42 +121,45 @@ class _MyHomePageState extends State<MyHomePage> {
 
   _buildWithPlatformNavBar(BuildContext context) {
     return PlatformScaffold(
-      appBar: PlatformAppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title, style: toolbarTextStyle),
-        cupertino: (_, __) => CupertinoNavigationBarData(
-          transitionBetweenRoutes: false,
-          trailing: PlatformButton(
-            padding: EdgeInsets.all(4.0),
-            child: Icon(Icons.add, color: Colors.white),
-            onPressed: () { Navigator.push(
-              context,
-              platformPageRoute(
-                builder: (BuildContext context) => BingoCardScreen(),
-                context: context)
-              );
-            },
+        appBar: PlatformAppBar(
+          // Here we take the value from the MyHomePage object that was created by
+          // the App.build method, and use it to set our appbar title.
+          title: Text(widget.title, style: toolbarTextStyle),
+          cupertino: (_, __) => CupertinoNavigationBarData(
+            transitionBetweenRoutes: false,
+            trailing: PlatformButton(
+              padding: EdgeInsets.all(4.0),
+              child: Icon(Icons.add, color: Colors.white),
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    platformPageRoute(
+                        builder: (BuildContext context) => BingoCardScreen(),
+                        context: context));
+              },
+            ),
           ),
         ),
-      ),
-      body: getPage(_tabIndex),
-      bottomNavBar: PlatformNavBar(
-        currentIndex: _tabIndex,
-        itemChanged: (index) { setState(() { _tabIndex = index; }); },
-        backgroundColor: Colors.blue,
-        items: [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.apps, color: Colors.grey),
-            title: Text('Bingo', style: bottomNavTextStyle),
-            activeIcon: Icon(Icons.business, color: Colors.white),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.rss_feed, color: Colors.grey),
-            title: Text('The Feed', style: bottomNavTextStyle),
-            activeIcon: Icon(Icons.person, color: Colors.white),
-          ),
-        ])
-    );
+        body: getPage(_tabIndex),
+        bottomNavBar: PlatformNavBar(
+            currentIndex: _tabIndex,
+            itemChanged: (index) {
+              setState(() {
+                _tabIndex = index;
+              });
+            },
+            backgroundColor: Colors.blue,
+            items: [
+              BottomNavigationBarItem(
+                icon: Icon(Icons.apps, color: Colors.grey),
+                title: Text('Bingo', style: bottomNavTextStyle),
+                activeIcon: Icon(Icons.business, color: Colors.white),
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.rss_feed, color: Colors.grey),
+                title: Text('The Feed', style: bottomNavTextStyle),
+                activeIcon: Icon(Icons.person, color: Colors.white),
+              ),
+            ]));
   }
 }
