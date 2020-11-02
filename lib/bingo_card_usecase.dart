@@ -1,9 +1,9 @@
 import 'dart:async';
 import 'package:dartz/dartz.dart';
 
-import 'failures.dart';
-import 'bingo_card.dart';
-import 'repositories/bingo_card_repository.dart';
+import 'core/failures.dart';
+import 'entities/bingo_card.dart';
+import 'bingo_card_repository.dart';
 
 class BingoCardUseCase {
   // TODO don't pass entity to presentation layer

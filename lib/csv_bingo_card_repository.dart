@@ -1,14 +1,13 @@
 import 'dart:async';
-import 'dart:convert';
-import 'dart:io';
 
 import 'package:csv/csv.dart';
 import 'package:flutter/services.dart' show rootBundle;
 
-import '../bingo_card.dart';
+import 'bingo_card_repository.dart';
+import 'entities/bingo_card.dart';
+import 'entities/bingo_card_activity.dart';
 
-// should be an interface
-class BingoCardRepository {
+class CSVBingoCardRepository implements BingoCardRepository {
   static final String srcFilePath = "assets/data/bingo_card_activities.csv";
 
   //List<BingoCard> findAllCardsReverseChronologically();
@@ -40,13 +39,14 @@ class BingoCardRepository {
     // better be only 25, not less
     List<BingoCardActivity> activities = List.from(activityData.map((a) {
       return BingoCardActivity(
+          bingoCardID: targetID,
           location: a[headerMap['location']],
           title: a[headerMap['title']],
           instructions: a[headerMap['instructions']],
           category: a[headerMap['category']]);
     }), growable: false);
 
-    activities.sort(BingoCardActivity.Comparator);
+    activities.sort(BingoCardActivity.comparator);
 
     return BingoCard(
       id: targetID.toInt(),

@@ -3,9 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 
+import 'theme.dart';
 import 'bingo_card_usecase.dart';
 //TODO NO entities in view layer
-import 'bingo_card.dart';
+import 'entities/bingo_card.dart';
 import 'activity_details_screen.dart';
 
 class Item {
@@ -27,13 +28,6 @@ class Item {
   }
 }
 
-// Theme Data (hex format, precede with 0xff)
-// Dark Blue:   0xff3A5067
-var dark_blue = const Color(0xff3A5067);
-// Light Blue:  0xff4D6275
-var light_blue = const Color(0xff4D6275);
-final toolbarTextStyle = TextStyle(color: Colors.white, fontSize: 16.0);
-
 class BingoCardScreen extends StatefulWidget {
   BingoCardScreen({Key key}) : super(key: key);
 
@@ -43,20 +37,20 @@ class BingoCardScreen extends StatefulWidget {
 
 class _BingoCardScreen extends State<BingoCardScreen> {
   // TODO no entities in view layer
-  BingoCard _card_in_play;
+  BingoCard _cardInPlay;
 
   @override
   void initState() {
     var useCase = BingoCardUseCase();
     useCase.playWithLatestBingoCard().then((bc) {
-      setState(() => _card_in_play = bc);
+      setState(() => _cardInPlay = bc);
     });
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    if (_card_in_play == null) return Container();
+    if (_cardInPlay == null) return Container();
 
     print('gap');
 
@@ -80,15 +74,15 @@ class _BingoCardScreen extends State<BingoCardScreen> {
       // Card's Title
       Container(
           child:
-              Text(_card_in_play.title, style: TextStyle(color: Colors.black))),
+              Text(_cardInPlay.title, style: TextStyle(color: Colors.black))),
       SizedBox(height: 18),
-      _buildBingoCard_asGridView(context)
+      _buildBingoCardAsGridView(context)
     ]);
   }
 
-  Widget _buildBingoCard_asGridView(BuildContext context) {
+  Widget _buildBingoCardAsGridView(BuildContext context) {
     var myList = <Item>[];
-    for (var bca in _card_in_play.activities) {
+    for (var bca in _cardInPlay.activities) {
       var activity = Item(bca.category);
       activity.id = bca.location;
       myList.add(activity);
@@ -96,8 +90,8 @@ class _BingoCardScreen extends State<BingoCardScreen> {
     buildActivitySquare(Item data) {
       var activity = () {
         var idx =
-            _card_in_play.activities.indexWhere((e) => e.location == data.id);
-        return _card_in_play.activities.elementAt(idx);
+            _cardInPlay.activities.indexWhere((e) => e.location == data.id);
+        return _cardInPlay.activities.elementAt(idx);
       };
       return GestureDetector(
           onTap: () {
