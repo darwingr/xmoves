@@ -2,7 +2,7 @@
   "entries": {
     "cask": {
       "android-studio": {
-        "version": "4.0.1.0,193.6626763",
+        "version": "4.1.0.19,201.6858069",
         "options": {
           "full_name": "android-studio"
         }
@@ -32,13 +32,13 @@
         }
       },
       "intel-haxm": {
-        "version": "7.6.1",
+        "version": "7.6.5",
         "options": {
           "full_name": "intel-haxm"
         }
       },
       "adoptopenjdk8": {
-        "version": "8,265:b01",
+        "version": "8,272:b10",
         "options": {
           "full_name": "adoptopenjdk8"
         }
@@ -46,7 +46,13 @@
     },
     "tap": {
       "adoptopenjdk/openjdk": {
-        "revision": "6cc8ee5e94fa654c49bb444c0df000a762f016fb"
+        "revision": "e6a0cac8a0738db90401d9483586f27ffaf30a06"
+      }
+    },
+    "brew": {
+      "gradle": {
+        "version": "6.7",
+        "bottle": false
       }
     }
   },
@@ -61,12 +67,12 @@
         "macOS": "10.14.6"
       },
       "catalina": {
-        "HOMEBREW_VERSION": "2.5.1-44-g9dd5d42",
+        "HOMEBREW_VERSION": "2.5.7-36-gac8cc16",
         "HOMEBREW_PREFIX": "/usr/local",
-        "Homebrew/homebrew-core": "e61cffcbd9d59e0421b5d84a414a4ebf69197f79",
-        "CLT": "11.5.0.0.1.1588476445",
-        "Xcode": "11.7",
-        "macOS": "10.15.6"
+        "Homebrew/homebrew-core": "02bce87253bd5362cd705140d59ab796bc9fa05e",
+        "CLT": "1103.0.32.62",
+        "Xcode": "12.1",
+        "macOS": "10.15.7"
       }
     }
   }

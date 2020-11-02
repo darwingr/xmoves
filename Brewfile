@@ -10,7 +10,7 @@ tap "adoptopenjdk/openjdk"
 ## Flutter SDK / Dart Runtime & package manager
 # exact same url folder downloaded as on the "Get Flutter SDK" official page
 #   auto-updates but stays in a version labelled path
-cask "flutter"
+#cask "flutter"
 # OR flutter install by channel, not version, update via cli yourself
 #tap "flschweiger/homebrew-flutter"
 #brew "flutter"
