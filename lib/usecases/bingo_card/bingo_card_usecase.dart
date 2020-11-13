@@ -3,7 +3,7 @@ import 'package:dartz/dartz.dart';
 
 import 'package:xmoves/core/failures.dart';
 import 'package:xmoves/entities/bingo_card.dart';
-import 'package:xmoves/repository_panel.dart';
+import 'package:xmoves/usecases/repository_panel.dart';
 
 /// Input to be provided by the user,
 ///   card_id

@@ -3,7 +3,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 
 import 'package:xmoves/repositories/csv_bingo_card_repository.dart';
-import 'repository_panel.dart';
+import 'package:xmoves/usecases/repository_panel.dart';
+
 import 'views/bingo_card_screen.dart';
 import 'theme.dart';
 
