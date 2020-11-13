@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 
 import 'theme.dart';
-import 'bingo_card_usecase.dart';
+import 'usecases/bingo_card/bingo_card_usecase.dart';
 //TODO NO entities in view layer
 import 'entities/bingo_card.dart';
 import 'activity_details_screen.dart';

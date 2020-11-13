@@ -30,7 +30,9 @@ flutter_setup: \
 #   Version file only needs to exist when installing.
 flutter_install: $(flutter_version_file)
 
-.PHONY: all setup flutter_setup flutter_install
+studio_config:
+
+.PHONY: all setup flutter_setup flutter_install studio_config
 
 # Executable binary exists
 #   Depend on this for any recipe calling flutter.

@@ -1,28 +1,46 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:xmoves/repositories/csv_bingo_card_repository.dart';
 
-import 'package:xmoves/csv_bingo_card_repository.dart';
+void main() async {
+  CSVBingoCardRepository repo;
 
-void main() {
-  //testWidgets('Printed out looks like ', (WidgetTester tester) async {
-  //  var repo = BingoCardRepository();
-  //  var f = repo.csvData();
-  //  var headers = await f.then( (ll) => ll[0]);
-  //  for (var h in headers) {
-  //    print(h);
-  //  }
-  //});
+  setUp(() {
+    repo = CSVBingoCardRepository();
+  });
 
-  // TODO should not require 'testWidget' to run unit test against repo
-  testWidgets('Pick any Bingo Card from CSV ', (WidgetTester tester) async {
-    var repo = CSVBingoCardRepository();
+  tearDown(() {
+    repo = null;
+  });
 
-    var f = repo.csvData();
-    var headers = await f.then( (ll) => ll[0]);
+  group('CSV starts with a header row', () {
+    final action = () => repo.csvData();
 
-    var card = await repo.pickAny();
-    var cardActivities = card.activities;
-    for (var activity in cardActivities) {
-      print("${activity.location}: ${activity.title}");
-    }
+    testWidgets('of a fixed size', (WidgetTester tester) async {
+      final csv = await tester.runAsync(action);
+
+      final headers = csv[0];
+      expect(headers.length, 9);
+    });
+  });
+
+  group('Pick most recent Bingo Card from CSV', () {
+    final action = () => repo.pickMostRecent();
+
+    testWidgets('Card ID is 1', (WidgetTester tester) async {
+      final card = await tester.runAsync(action);
+
+      expect(card.id, 1);
+    });
+
+    testWidgets('First and last activities have locations 11 and 55',
+            (WidgetTester tester) async
+    {
+      final card = await tester.runAsync(action);
+      var firstActivity = card.activities.first;
+      var lastActivity  = card.activities.last;
+
+      expect(firstActivity.location, 11);
+      expect(lastActivity.location,  55);
+    });
   });
 }

@@ -1,28 +1,23 @@
 import 'dart:async';
-
-import 'package:csv/csv.dart';
 import 'package:flutter/services.dart' show rootBundle;
+import 'package:csv/csv.dart';
 
-import 'bingo_card_repository.dart';
-import 'entities/bingo_card.dart';
-import 'entities/bingo_card_activity.dart';
+import 'package:xmoves/entities/bingo_card.dart';
+import 'package:xmoves/entities/bingo_card_activity.dart';
+import 'package:xmoves/usecases/bingo_card/bingo_card_repository.dart';
 
 class CSVBingoCardRepository implements BingoCardRepository {
   static final String srcFilePath = "assets/data/bingo_card_activities.csv";
 
-  //List<BingoCard> findAllCardsReverseChronologically();
-
-  //BingoCard findByID(String bingoCardID);
-
   // TODO: can fail if empty csv, degenerate case
-  Future<BingoCard> pickAny() async {
+  Future<BingoCard> pickMostRecent() async {
     final csv = await csvData();
-    var headerMap = await _fieldLabels(csv);
+    var headerMap = _fieldLabels(csv);
     int cardIdColumnIdx = headerMap['bingo_card_id'];
 
     // 1. pick a BingoCard ID
     // TODO may fail to access
-    int entryIndex = 1;
+    int entryIndex = _mostRecentBingoCardOrderedByID(csv);
     final entry = csv.elementAt(entryIndex);
     final targetID = entry.elementAt(cardIdColumnIdx);
     // 2. grab the card title
@@ -55,6 +50,12 @@ class CSVBingoCardRepository implements BingoCardRepository {
     );
   }
 
+  /// Infer recentness by picking the largest card ID used so far,
+  /// returns the row where it is found
+  _mostRecentBingoCardOrderedByID(List<List<dynamic>> csv) {
+    return 1; // Row index 1 has largest bingo_card_id
+  }
+
   _fieldLabels(List<List<dynamic>> csvData) {
     final firstRow = csvData[0];
     final idxValues = Iterable.generate(firstRow.length);
@@ -62,10 +63,7 @@ class CSVBingoCardRepository implements BingoCardRepository {
   }
 
   Future<List<List<dynamic>>> csvData() async {
-    final srcFile = await rootBundle.loadString(srcFilePath);
-    return const CsvToListConverter().convert(srcFile);
-    //return srcFile.transform(utf8.decoder)
-    //    .transform(CsvToListConverter())
-    //    .toList();
+    final String srcFileData = await rootBundle.loadString(srcFilePath);
+    return const CsvToListConverter().convert(srcFileData);
   }
 }

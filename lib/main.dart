@@ -2,10 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 
-import './bingo_card_screen.dart';
+import 'repository_panel.dart';
+import 'repositories/csv_bingo_card_repository.dart';
+import 'bingo_card_screen.dart';
 import 'theme.dart';
 
-void main() => runApp(MyApp());
+void main() async {
+  RepositoryPanel.bingoCards = CSVBingoCardRepository();
+
+  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
   @override
