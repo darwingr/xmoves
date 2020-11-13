@@ -1,5 +1,7 @@
 import 'package:collection/collection.dart';
 
+const DeepCollectionEquality _equality = DeepCollectionEquality();
+
 /*
     From UncleBob Clean:
     - implements Cloneable
@@ -31,32 +33,31 @@ class Entity {
       entity is Entity &&
         runtimeType == entity.runtimeType &&
         _equals(identifiers, entity.identifiers);
-}
 
-const DeepCollectionEquality _equality = DeepCollectionEquality();
 
-/// Determines whether [list1] and [list2] are equal.
-bool _equals(List list1, List list2) {
-  if (identical(list1, list2)) return true;
-  if (list1 == null || list2 == null) return false;
-  final length = list1.length;
-  if (length != list2.length) return false;
+  /// Determines whether [list1] and [list2] are equal.
+  bool _equals(List list1, List list2) {
+    if (identical(list1, list2)) return true;
+    if (list1 == null || list2 == null) return false;
+    final length = list1.length;
+    if (length != list2.length) return false;
 
-  for (var i = 0; i < length; i++) {
-    final dynamic unit1 = list1[i];
-    final dynamic unit2 = list2[i];
+    for (var i = 0; i < length; i++) {
+      final dynamic unit1 = list1[i];
+      final dynamic unit2 = list2[i];
 
-    if (unit1 is Iterable || unit1 is Map) {
-      if (!_equality.equals(unit1, unit2)) return false;
-    } else if (unit1?.runtimeType != unit2?.runtimeType) {
-      return false;
-    } else if (unit1 != unit2) {
-      return false;
-    } else if (unit1 == null || unit2 == null) {
-      return false;
-    } else if (unit1 == '' || unit2 == '') {
-      return false;
+      if (unit1 is Iterable || unit1 is Map) {
+        if (!_equality.equals(unit1, unit2)) return false;
+      } else if (unit1?.runtimeType != unit2?.runtimeType) {
+        return false;
+      } else if (unit1 != unit2) {
+        return false;
+      } else if (unit1 == null || unit2 == null) {
+        return false;
+      } else if (unit1 == '' || unit2 == '') {
+        return false;
+      }
     }
+    return true;
   }
-  return true;
 }

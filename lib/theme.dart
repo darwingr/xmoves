@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 
 // Theme Data (hex format, precede with 0xff)
 // Dark Blue:   0xff3A5067
-final dark_blue = const Color(0xff3A5067);
+final darkBlue = const Color(0xff3A5067);
 // Light Blue:  0xff4D6275
-final light_blue = const Color(0xff4D6275);
+final lightBlue = const Color(0xff4D6275);
 
 final materialThemeData = ThemeData(
     // This is the theme of your application.
@@ -30,12 +29,12 @@ final materialThemeData = ThemeData(
     secondaryHeaderColor: Colors.blue,
     canvasColor: Colors.blue,
     backgroundColor: Colors.red,
-    textTheme: TextTheme().copyWith(body1: TextTheme().body1));
+    textTheme: TextTheme().copyWith(bodyText2: TextTheme().bodyText2));
 
 final cupertinoTheme = CupertinoThemeData(
-    primaryColor: light_blue,
+    primaryColor: lightBlue,
     barBackgroundColor: Colors.white,
-    scaffoldBackgroundColor: light_blue);
+    scaffoldBackgroundColor: lightBlue);
 
 // Styles
 final bottomNavTextStyle = TextStyle(color: Colors.white, fontSize: 14.0);

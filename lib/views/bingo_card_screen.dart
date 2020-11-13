@@ -3,10 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 
-import 'theme.dart';
-import 'usecases/bingo_card/bingo_card_usecase.dart';
+import 'package:xmoves/usecases/bingo_card/bingo_card_usecase.dart';
 //TODO NO entities in view layer
-import 'entities/bingo_card.dart';
+import 'package:xmoves/entities/bingo_card.dart';
+
+import '../theme.dart';
 import 'activity_details_screen.dart';
 
 class Item {
@@ -55,7 +56,7 @@ class _BingoCardScreen extends State<BingoCardScreen> {
     print('gap');
 
     return PlatformScaffold(
-      backgroundColor: light_blue,
+      backgroundColor: lightBlue,
       body: _buildBingoCardContent(context),
     );
   }
