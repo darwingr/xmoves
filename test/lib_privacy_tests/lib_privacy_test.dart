@@ -6,7 +6,7 @@ import 'neighbor_lib.dart'  as neighbor_lib;
 
 part "lib_privacy.dart";
 
-class _PrivateClass_inSameFile {
+class _PrivateClassInSameFile {
   String data = "accessible string";
 }
 
@@ -23,17 +23,17 @@ class _PrivateClass_inSameFile {
 void main() {
   group('_PrivateClass_inSameFile', () {
     test('() constructor succeeds', () {
-      var obj = _PrivateClass_inSameFile();
-      expect(obj, isA<_PrivateClass_inSameFile>());
+      var obj = _PrivateClassInSameFile();
+      expect(obj, isA<_PrivateClassInSameFile>());
     });
 
     test('#data can be read', () {
-      var obj = _PrivateClass_inSameFile();
+      var obj = _PrivateClassInSameFile();
       expect(obj.data, "accessible string");
     });
 
     test('#data can be mutated', () {
-      var obj = _PrivateClass_inSameFile();
+      var obj = _PrivateClassInSameFile();
       var before = obj.data;
       var after = "mutated string";
       obj.data = after;
@@ -46,17 +46,17 @@ void main() {
   group('neighbor_file.', () {
     group('PublicClass_inImportedFile', () {
       test('() constructor succeeds', () {
-        var obj = neighbor_file.PublicClass_inImportedFile();
-        expect(obj, isA<neighbor_file.PublicClass_inImportedFile>());
+        var obj = neighbor_file.PublicClassInImportedFile();
+        expect(obj, isA<neighbor_file.PublicClassInImportedFile>());
       });
 
       test('#data can be read', () {
-        var obj = neighbor_file.PublicClass_inImportedFile();
+        var obj = neighbor_file.PublicClassInImportedFile();
         expect(obj.data, "accessible string");
       });
 
       test('#data can be mutated', () {
-        var obj = neighbor_file.PublicClass_inImportedFile();
+        var obj = neighbor_file.PublicClassInImportedFile();
         var before = obj.data;
         var after = "mutated string";
         obj.data = after;
@@ -79,17 +79,17 @@ void main() {
   group('lib_privacy.', () {
     group('PlublicClass_inCurrentLib', () {
       test('() constructor succeeds', () {
-        var obj = PublicClass_inCurrentLib();
-        expect(obj, isA<PublicClass_inCurrentLib>());
+        var obj = PublicClassInCurrentLib();
+        expect(obj, isA<PublicClassInCurrentLib>());
       });
 
       test('#data can be read', () {
-        var obj = PublicClass_inCurrentLib();
+        var obj = PublicClassInCurrentLib();
         expect(obj.data, "accessible string");
       });
 
       test('#data can be mutated', () {
-        var obj = PublicClass_inCurrentLib();
+        var obj = PublicClassInCurrentLib();
         var before = obj.data;
         var after = "mutated string";
         obj.data = after;
@@ -100,17 +100,17 @@ void main() {
 
     group('_PrivateClass_inCurrentLib', () {
       test('() constructor succeeds', () {
-        var obj = _PrivateClass_inCurrentLib();
-        expect(obj, isA<_PrivateClass_inCurrentLib>());
+        var obj = _PrivateClassInCurrentLib();
+        expect(obj, isA<_PrivateClassInCurrentLib>());
       });
 
       test('#data can be read', () {
-        var obj = _PrivateClass_inCurrentLib();
+        var obj = _PrivateClassInCurrentLib();
         expect(obj.data, "accessible string");
       });
 
       test('#data can be mutated', () {
-        var obj = _PrivateClass_inCurrentLib();
+        var obj = _PrivateClassInCurrentLib();
         var before = obj.data;
         var after = "mutated string";
         obj.data = after;
@@ -124,17 +124,17 @@ void main() {
   group('neighbor_lib.', () {
     group('PlublicClass_inImportedLib', () {
       test('() constructor succeeds', () {
-        var obj = neighbor_lib.PublicClass_inImportedLib();
-        expect(obj, isA<neighbor_lib.PublicClass_inImportedLib>());
+        var obj = neighbor_lib.PublicClassInImportedLib();
+        expect(obj, isA<neighbor_lib.PublicClassInImportedLib>());
       });
 
       test('#data can be read', () {
-        var obj = neighbor_lib.PublicClass_inImportedLib();
+        var obj = neighbor_lib.PublicClassInImportedLib();
         expect(obj.data, "accessible string");
       });
 
       test('#data can be mutated', () {
-        var obj = neighbor_lib.PublicClass_inImportedLib();
+        var obj = neighbor_lib.PublicClassInImportedLib();
         var before = obj.data;
         var after = "mutated string";
         obj.data = after;

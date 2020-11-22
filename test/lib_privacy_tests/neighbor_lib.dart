@@ -1,10 +1,10 @@
 library neighbor_lib;
 
 // a neighbor library
-class _PrivateClass_inImportedLib {
+class _PrivateClassInImportedLib {
   String data = "accessible string";
 }
 
-class PublicClass_inImportedLib {
+class PublicClassInImportedLib {
   String data = "accessible string";
 }

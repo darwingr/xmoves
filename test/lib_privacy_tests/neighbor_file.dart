@@ -1,8 +1,8 @@
 
 // a neighbor file
-class _PrivateClass_inImportedFile{
+class _PrivateClassInImportedFile{
   String data = "accessible string";
 }
-class PublicClass_inImportedFile{
+class PublicClassInImportedFile{
   String data = "accessible string";
 }

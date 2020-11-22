@@ -1,9 +1,9 @@
 part of "lib_privacy_test.dart";
 
-class _PrivateClass_inCurrentLib {
+class _PrivateClassInCurrentLib {
   String data = "accessible string";
 }
 
-class PublicClass_inCurrentLib {
+class PublicClassInCurrentLib {
   String data = "accessible string";
 }
