@@ -43,7 +43,7 @@ dependencies:
   # Platform Target Style
   flutter_platform_widgets: ^0.70.1
   # Local cache: Flutter plugin for reading and writing simple key-value pairs.
-  shared_preferences: ^0.5.12+4
+  shared_preferences: '>=0.5.12+4 <2.0.0'
 
 
 dev_dependencies:
