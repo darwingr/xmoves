@@ -41,7 +41,7 @@ class CSVBingoCardRepository implements BingoCardRepository {
           category: a[headerMap['category']]);
     }), growable: false);
 
-    activities.sort(BingoCardActivity.comparator);
+    activities.sort(BingoCardActivity.locationComparator);
 
     return BingoCard(
       id: targetID.toInt(),

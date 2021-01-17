@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 
-import 'package:xmoves/repositories/csv_bingo_card_repository.dart';
+import 'package:xmoves/infrastructure/csv_bingo_card_repository.dart';
 import 'package:xmoves/application/repository_panel.dart';
 
 import 'view/bingo_card_screen.dart';

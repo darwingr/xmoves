@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:xmoves/repositories/csv_bingo_card_repository.dart';
+import 'package:xmoves/infrastructure/csv_bingo_card_repository.dart';
 
 void main() async {
   CSVBingoCardRepository repo;
