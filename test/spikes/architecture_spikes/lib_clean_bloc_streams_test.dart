@@ -27,7 +27,7 @@ Future<void> main() async {
       bloc.add(presentation.ReportEvent.getReport);
       // To ensure we wait for the next event-loop iteration,
       // allowing the event to be processed.
-      await Future.delayed(Duration.zero);
+      await Future<dynamic>.delayed(Duration.zero);
 
       expect(bloc.state,      isA<domain.ViewModel>());
       expect(bloc.state,      isA<presentation.ReportState>());
@@ -43,7 +43,7 @@ Future<void> main() async {
       bloc.add(presentation.ReportEvent.getReport);
       bloc.add(presentation.ReportEvent.getReport);
       // to avoid cancelling sub immediately
-      await Future.delayed(Duration.zero);
+      await Future<dynamic>.delayed(Duration.zero);
 
       expect(i, equals(3));
       await subscription.cancel();
@@ -55,7 +55,7 @@ Future<void> main() async {
       var initialText = presentation.ReportInitial().text;
 
       bloc.add(presentation.ReportEvent.getReportLazily);
-      await Future.delayed(Duration.zero);
+      await Future<dynamic>.delayed(Duration.zero);
 
       expect(bloc.state,      isA<domain.ViewModel>());
       expect(bloc.state,      isA<presentation.ReportState>());
@@ -70,7 +70,7 @@ Future<void> main() async {
       bloc.add(presentation.ReportEvent.getReportLazily);
       bloc.add(presentation.ReportEvent.getReportLazily);
       bloc.add(presentation.ReportEvent.getReportLazily);
-      await Future.delayed(Duration.zero);
+      await Future<dynamic>.delayed(Duration.zero);
 
       expect(i, equals(3));
       await subscription.cancel();

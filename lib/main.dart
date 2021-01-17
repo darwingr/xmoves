@@ -57,7 +57,7 @@ class _MyHomePageState extends State<MyHomePage> {
             onPressed: () {
               Navigator.push(
                   context,
-                  platformPageRoute(
+                  platformPageRoute<Widget>(
                       builder: (BuildContext context) => BingoCardScreen(),
                       context: context));
             },
@@ -72,7 +72,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return BingoCardScreen();
   }
 
-  _buildWithPlatformNavBar(BuildContext context) {
+  Widget _buildWithPlatformNavBar(BuildContext context) {
     return PlatformScaffold(
         appBar: PlatformAppBar(
           // Here we take the value from the MyHomePage object that was created by
@@ -86,7 +86,7 @@ class _MyHomePageState extends State<MyHomePage> {
               onPressed: () {
                 Navigator.push(
                     context,
-                    platformPageRoute(
+                    platformPageRoute<Widget>(
                         builder: (BuildContext context) => BingoCardScreen(),
                         context: context));
               },

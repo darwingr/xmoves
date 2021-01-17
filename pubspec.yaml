@@ -23,6 +23,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  # Analyzer Rules
+  effective_dart: ^1.3.0
   csv: ^4.1.0
   # Inherited Widget Wrapper: access objects from the UI
   provider: ^4.3.2+3

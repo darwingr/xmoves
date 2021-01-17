@@ -1,7 +1,8 @@
 import 'package:meta/meta.dart';
 
 @immutable
-abstract class ViewModel {}
+abstract class ViewModel {
+}
 
 // ---PRESENTATION BOUNDARY
 
