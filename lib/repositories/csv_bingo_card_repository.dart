@@ -2,9 +2,9 @@ import 'dart:async';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:csv/csv.dart';
 
-import 'package:xmoves/entities/bingo_card.dart';
-import 'package:xmoves/entities/bingo_card_activity.dart';
-import 'package:xmoves/usecases/bingo_card/bingo_card_repository.dart';
+import 'package:xmoves/domain/bingo_card.dart';
+import 'package:xmoves/domain/bingo_card_activity.dart';
+import 'package:xmoves/application/bingo_card_repository.dart';
 
 class CSVBingoCardRepository implements BingoCardRepository {
   static final String srcFilePath = "assets/data/bingo_card_activities.csv";

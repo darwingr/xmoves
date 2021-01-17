@@ -1,6 +1,6 @@
 import 'package:test/test.dart';
 
-import 'package:xmoves/entities/bingo_card.dart';
+import 'package:xmoves/domain/bingo_card.dart';
 
 void main() {
   test('two different cards have different ID numbers', () {

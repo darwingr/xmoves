@@ -3,29 +3,33 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 
-import 'package:xmoves/usecases/bingo_card/bingo_card_usecase.dart';
-//TODO NO entities in view layer
-import 'package:xmoves/entities/bingo_card.dart';
+import 'package:xmoves/application/bingo_card_usecase/interactor.dart';
 
+//TODO NO entities in view layer
+import 'package:xmoves/domain/bingo_card.dart';
+
+// TODO only access theme via context, leave theme.dart next to main.dart
 import '../theme.dart';
 import 'activity_details_screen.dart';
 
-class Item {
+class ActivityTile {
   int id;
+  bool isVisible = true;
   String title;
   String subtitle;
   String event = "Incomplete";
   String img;
-  //Item({this.title, this.subtitle, this.event, this.img});
-  Item(var title)
-      : this.id = 0,
-        this.title = title,
-        this.subtitle = title,
-        this.event = "Incomplete",
-        this.img = "assets/images/AppIcon-128.png";
+
+  //ActivityTile({this.title, this.subtitle, this.event, this.img});
+
+  ActivityTile(this.title)
+      : id = 0,
+        subtitle = title,
+        event = "Incomplete",
+        img = "assets/images/AppIcon-128.png";
 
   String location() {
-    return "row ${this.id ~/ 10}, column ${this.id % 10}";
+    return "row ${id ~/ 10}, column ${id % 10}";
   }
 }
 
@@ -42,7 +46,7 @@ class _BingoCardScreen extends State<BingoCardScreen> {
 
   @override
   void initState() {
-    var useCase = BingoCardUseCase();
+    var useCase = BingoCardUseCaseInteractor();
     useCase.playWithLatestBingoCard().then((bc) {
       setState(() => _cardInPlay = bc);
     });
@@ -52,8 +56,6 @@ class _BingoCardScreen extends State<BingoCardScreen> {
   @override
   Widget build(BuildContext context) {
     if (_cardInPlay == null) return Container();
-
-    print('gap');
 
     return PlatformScaffold(
       backgroundColor: lightBlue,
@@ -82,31 +84,29 @@ class _BingoCardScreen extends State<BingoCardScreen> {
   }
 
   Widget _buildBingoCardAsGridView(BuildContext context) {
-    var myList = <Item>[];
+    var myList = <ActivityTile>[];
     for (var bca in _cardInPlay.activities) {
-      var activity = Item(bca.category);
+      var activity = ActivityTile(bca.category);
       activity.id = bca.location;
       myList.add(activity);
     }
-    buildActivitySquare(Item data) {
-      var activity = () {
-        var idx =
-            _cardInPlay.activities.indexWhere((e) => e.location == data.id);
-        return _cardInPlay.activities.elementAt(idx);
-      };
+    buildActivitySquare(ActivityTile data) {
+      var idx = _cardInPlay.activities.indexWhere((e) => e.location == data.id);
+      var activity = _cardInPlay.activities.elementAt(idx);
+
       return GestureDetector(
           onTap: () {
-            print("Going to activity details from ${data.location()}");
             Navigator.push(
                 context,
-                platformPageRoute(
+                platformPageRoute<Widget>(
                     builder: (context) =>
-                        ActivityDetailsScreen(activity: activity()),
+                        ActivityDetailsScreen(activity: activity),
                     context: context));
           },
           child: Container(
             decoration: BoxDecoration(
-                color: Colors.white, borderRadius: BorderRadius.circular(10)),
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(10)),
             child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[

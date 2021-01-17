@@ -1,5 +1,5 @@
 import 'package:test/test.dart';
-import 'package:xmoves/entities/entity.dart';
+import 'package:xmoves/core/entity.dart';
 
 void main() {
   test('two different Entities are not the same', () {

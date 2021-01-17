@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 
-import 'package:xmoves/entities/bingo_card_activity.dart';
+import 'package:xmoves/domain/bingo_card_activity.dart';
 
 class ActivityDetailsScreen extends StatelessWidget {
   final BingoCardActivity activity;

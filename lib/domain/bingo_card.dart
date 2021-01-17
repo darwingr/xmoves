@@ -1,6 +1,6 @@
 import 'package:meta/meta.dart';
 
-import 'entity.dart';
+import 'package:xmoves/core/entity.dart';
 import 'bingo_card_activity.dart';
 
 class BingoCard extends Entity {
