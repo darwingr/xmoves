@@ -13,9 +13,9 @@ void main() async {
   });
 
   group('CSV starts with a header row', () {
-    final action = () => repo.csvData();
+    action() => repo.csvData();
 
-    testWidgets('of a fixed size', (WidgetTester tester) async {
+    testWidgets('of a fixed size', (tester) async {
       final csv = await tester.runAsync(action);
 
       final headers = csv[0];
@@ -24,16 +24,16 @@ void main() async {
   });
 
   group('Pick most recent Bingo Card from CSV', () {
-    final action = () => repo.pickMostRecent();
+    action() => repo.pickMostRecent();
 
-    testWidgets('Card ID is 1', (WidgetTester tester) async {
+    testWidgets('Card ID is 1', (tester) async {
       final card = await tester.runAsync(action);
 
       expect(card.id, 1);
     });
 
     testWidgets('First and last activities have locations 11 and 55',
-            (WidgetTester tester) async
+            (tester) async
     {
       final card = await tester.runAsync(action);
       var firstActivity = card.activities.first;

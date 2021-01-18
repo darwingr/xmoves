@@ -13,15 +13,15 @@ class CSVBingoCardRepository implements BingoCardRepository {
   Future<BingoCard> pickMostRecent() async {
     final csv = await csvData();
     var headerMap = _fieldLabels(csv);
-    int cardIdColumnIdx = headerMap['bingo_card_id'];
+    var cardIdColumnIdx = headerMap['bingo_card_id'];
 
     // 1. pick a BingoCard ID
     // TODO may fail to access
-    int entryIndex = _mostRecentBingoCardOrderedByID(csv);
-    final entry = csv.elementAt(entryIndex);
-    final targetID = entry.elementAt(cardIdColumnIdx);
+    var rowIdx = _mostRecentBingoCardOrderedByID(csv);
+    final row = csv.elementAt(rowIdx);
+    final targetID = row.elementAt(cardIdColumnIdx) as int;
     // 2. grab the card title
-    final targetTitle = csv[entryIndex][headerMap['bingo_card_title']];
+    final targetTitle = csv[rowIdx][headerMap['bingo_card_title']] as String;
     // 3. build a list of activities
     //  3.1. SELECT
     //    id, location, title (subtitle is same), instructions, category
@@ -32,14 +32,15 @@ class CSVBingoCardRepository implements BingoCardRepository {
     var activityData = csv.where((row) => row[cardIdColumnIdx] == targetID);
 
     // better be only 25, not less
-    List<BingoCardActivity> activities = List.from(activityData.map((a) {
-      return BingoCardActivity(
+    var activities = List<BingoCardActivity>.from(
+        activityData.map<BingoCardActivity>((a) => BingoCardActivity(
           bingoCardID: targetID,
-          location: a[headerMap['location']],
-          title: a[headerMap['title']],
-          instructions: a[headerMap['instructions']],
-          category: a[headerMap['category']]);
-    }), growable: false);
+          location: a[headerMap['location']] as int,
+          title: a[headerMap['title']] as String,
+          instructions: a[headerMap['instructions']] as String,
+          category: a[headerMap['category']] as String)
+        ),
+        growable: false);
 
     activities.sort(BingoCardActivity.locationComparator);
 
@@ -52,18 +53,18 @@ class CSVBingoCardRepository implements BingoCardRepository {
 
   /// Infer recentness by picking the largest card ID used so far,
   /// returns the row where it is found
-  _mostRecentBingoCardOrderedByID(List<List<dynamic>> csv) {
+  int _mostRecentBingoCardOrderedByID(List<List<dynamic>> csv) {
     return 1; // Row index 1 has largest bingo_card_id
   }
 
-  _fieldLabels(List<List<dynamic>> csvData) {
-    final firstRow = csvData[0];
-    final idxValues = Iterable.generate(firstRow.length);
-    return Map.fromIterables(firstRow, idxValues);
+  Map<String, int> _fieldLabels(List<List<dynamic>> csvData) {
+    final firstRow = List<String>.from(csvData[0]);
+    final idxValues = Iterable<int>.generate(firstRow.length);
+    return Map<String, int>.fromIterables(firstRow, idxValues);
   }
 
   Future<List<List<dynamic>>> csvData() async {
-    final String srcFileData = await rootBundle.loadString(srcFilePath);
+    final srcFileData = await rootBundle.loadString(srcFilePath);
     return const CsvToListConverter().convert(srcFileData);
   }
 }
