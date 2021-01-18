@@ -58,7 +58,7 @@ class _MyHomePageState extends State<MyHomePage> {
               Navigator.push(
                   context,
                   platformPageRoute<Widget>(
-                      builder: (BuildContext context) => BingoCardScreen(),
+                      builder: (context) => BingoCardScreen(),
                       context: context));
             },
           ),
@@ -75,8 +75,8 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget _buildWithPlatformNavBar(BuildContext context) {
     return PlatformScaffold(
         appBar: PlatformAppBar(
-          // Here we take the value from the MyHomePage object that was created by
-          // the App.build method, and use it to set our appbar title.
+          // Here we take the value from the MyHomePage object that was created
+          // by the App.build method, and use it to set our appbar title.
           title: Text(widget.title, style: toolbarTextStyle),
           cupertino: (_, __) => CupertinoNavigationBarData(
             transitionBetweenRoutes: false,
@@ -87,7 +87,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 Navigator.push(
                     context,
                     platformPageRoute<Widget>(
-                        builder: (BuildContext context) => BingoCardScreen(),
+                        builder: (context) => BingoCardScreen(),
                         context: context));
               },
             ),

@@ -62,17 +62,17 @@ class ActivityDetailsScreen extends StatelessWidget {
         activity.instructions,
         //'Do a workout with a friend over video chat.\n\n'
         //'Lake Oeschinen lies at the foot of the Blüemlisalp in the Bernese '
-        //    'Alps. Situated 1,578 meters above sea level, it is one of the '
-        //    'larger Alpine Lakes. A gondola ride from Kandersteg, followed by a '
-        //    'half-hour walk through pastures and pine forest, leads you to the '
-        //    'lake, which warms to 20 degrees Celsius in the summer. Activities '
-        //    'enjoyed here include rowing, and riding the summer toboggan run.',
+        //'Alps. Situated 1,578 meters above sea level, it is one of the '
+        //'larger Alpine Lakes. A gondola ride from Kandersteg, followed by a '
+        //'half-hour walk through pastures and pine forest, leads you to the '
+        //'lake, which warms to 20 degrees Celsius in the summer. Activities '
+        //'enjoyed here include rowing, and riding the summer toboggan run.',
         softWrap: true,
         //style: textTheme.bodyText1
       ),
     );
 
-    Color buttonColor = Theme.of(context).primaryColor;
+    var buttonColor = Theme.of(context).primaryColor;
     Widget buttonSection = Container(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -85,7 +85,7 @@ class ActivityDetailsScreen extends StatelessWidget {
     );
 
     return PlatformScaffold(
-        // Goback '<' arrow also shows in header, done by PlatformAppBar
+        // Go back '<' arrow also shows in header, done by PlatformAppBar
         appBar: PlatformAppBar(title: PlatformText("Activity Details")),
         body: ListView(children: <Widget>[
           // Activity Title
