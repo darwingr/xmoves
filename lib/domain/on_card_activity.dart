@@ -1,7 +1,9 @@
 import 'package:meta/meta.dart';
 import 'package:xmoves/core/entity.dart';
 
-class BingoCardActivity extends Entity {
+import 'activity_progress.dart';
+
+class OnCardActivity extends Entity {
   final int bingoCardID;
   int get location => _location.to_int();
   String title;
@@ -11,27 +13,33 @@ class BingoCardActivity extends Entity {
   String category;
 
   // for sorting amongst activities on the same card
-  static int locationComparator(BingoCardActivity a, BingoCardActivity b) {
+  static int locationComparator(OnCardActivity a, OnCardActivity b) {
     if (a.location <  b.location) return -1;
     if (a.location == b.location) return  0;
     return 1;
   }
 
-  BingoCardActivity({
+  OnCardActivity({
     @required this.bingoCardID,
     @required int location,
               this.title,
               this.instructions,
               this.category,
-  }) : _location = OnCardLocation(location);
+    ActivityProgress progress,
+  }) : _location = OnCardLocation(location),
+       _progress = progress ?? ActivityProgress(bingoCardID: bingoCardID,
+                                                activityID: location);
 
   int row() { return location ~/ 10; }
   int col() { return location  % 10; }
+
+  ActivityProgressStatus status() => _progress.status;
 
   @override
   List<Object> get identifiers => [bingoCardID, location];
 
   final OnCardLocation _location;
+  ActivityProgress _progress;
 }
 
 class OnCardLocation {

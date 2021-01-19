@@ -3,7 +3,7 @@ import 'package:flutter/services.dart' show rootBundle;
 import 'package:csv/csv.dart';
 
 import 'package:xmoves/domain/bingo_card.dart';
-import 'package:xmoves/domain/bingo_card_activity.dart';
+import 'package:xmoves/domain/on_card_activity.dart';
 import 'package:xmoves/application/bingo_card_repository.dart';
 
 class CSVBingoCardRepository implements BingoCardRepository {
@@ -32,8 +32,8 @@ class CSVBingoCardRepository implements BingoCardRepository {
     var activityData = csv.where((row) => row[cardIdColumnIdx] == targetID);
 
     // better be only 25, not less
-    var activities = List<BingoCardActivity>.from(
-        activityData.map<BingoCardActivity>((a) => BingoCardActivity(
+    var activities = List<OnCardActivity>.from(
+        activityData.map<OnCardActivity>((a) => OnCardActivity(
           bingoCardID: targetID,
           location: a[headerMap['location']] as int,
           title: a[headerMap['title']] as String,
@@ -42,7 +42,7 @@ class CSVBingoCardRepository implements BingoCardRepository {
         ),
         growable: false);
 
-    activities.sort(BingoCardActivity.locationComparator);
+    activities.sort(OnCardActivity.locationComparator);
 
     return BingoCard(
       id: targetID.toInt(),
