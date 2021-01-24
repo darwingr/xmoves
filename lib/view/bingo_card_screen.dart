@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 
 import 'package:xmoves/application/bingo_card_usecase/interactor.dart';
+import 'package:xmoves/application/repository_adapters.dart';
 
 //TODO NO entities in view layer
 import 'package:xmoves/domain/bingo_card.dart';
@@ -46,7 +47,7 @@ class _BingoCardScreen extends State<BingoCardScreen> {
 
   @override
   void initState() {
-    var useCase = BingoCardUseCaseInteractor();
+    var useCase = BingoCardUseCaseInteractor(RepositoryAdapters.bingoCards);
     useCase.playWithLatestBingoCard().then((bc) {
       setState(() => _cardInPlay = bc);
     });

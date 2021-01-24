@@ -1,26 +1,31 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:xmoves/domain/bingo_card.dart';
 import 'package:xmoves/infrastructure/csv_bingo_card_repository.dart';
 
 void main() async {
   CSVBingoCardRepository repo;
 
   setUp(() {
-    repo = CSVBingoCardRepository();
+    repo = CSVBingoCardRepository.fromAssetBundle();
   });
 
-  tearDown(() {
-    repo = null;
-  });
+  group('Find by ID', () {
 
-  group('CSV starts with a header row', () {
-    action() => repo.csvData();
+    testWidgets('Card ID is 1', (tester) async {
+      action() => repo.findByID(1);
+      final card = await tester.runAsync(action);
 
-    testWidgets('of a fixed size', (tester) async {
-      final csv = await tester.runAsync(action);
-
-      final headers = csv[0];
-      expect(headers.length, 9);
+      expect(card.id, 1);
     });
+
+
+    //TODO failure case handling for repositories
+    testWidgets('ID not in repository', (tester) async {
+      action() => repo.findByID(0);
+      final card = await tester.runAsync(action);
+
+      expect(card.id, 1);
+    }, skip: true);
   });
 
   group('Pick most recent Bingo Card from CSV', () {

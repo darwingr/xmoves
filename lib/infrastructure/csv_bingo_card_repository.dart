@@ -1,47 +1,37 @@
 import 'dart:async';
-import 'package:flutter/services.dart' show rootBundle;
-import 'package:csv/csv.dart';
 
 import 'package:xmoves/domain/bingo_card.dart';
 import 'package:xmoves/domain/on_card_activity.dart';
 import 'package:xmoves/application/bingo_card_repository.dart';
+import 'package:xmoves/infrastructure/csv_table_file.dart';
 
+
+// TODO: can fail if empty csv, degenerate case
 class CSVBingoCardRepository implements BingoCardRepository {
   static final String srcFilePath = "assets/data/bingo_card_activities.csv";
+  final CSVTableFile csv;
 
-  // TODO: can fail if empty csv, degenerate case
+  CSVBingoCardRepository(this.csv);
+
+  // Want to avoid the path details in the presentation layer
+  factory CSVBingoCardRepository.fromAssetBundle() {
+    return CSVBingoCardRepository(CSVTableFile.fromAssetBundle(srcFilePath));
+  }
+
   Future<BingoCard> pickMostRecent() async {
-    final csv = await csvData();
-    var headerMap = _fieldLabels(csv);
-    var cardIdColumnIdx = headerMap['bingo_card_id'];
+    var cardID = _mostRecentBingoCardOrderedByID();
+    return findByID(cardID);
+  }
 
-    // 1. pick a BingoCard ID
-    // TODO may fail to access
-    var rowIdx = _mostRecentBingoCardOrderedByID(csv);
-    final row = csv.elementAt(rowIdx);
-    final targetID = row.elementAt(cardIdColumnIdx) as int;
+  Future<BingoCard> findByID(int cardID) async {
+    // 1. Get BingoCard ID
+    final rows = await csv.rowsWhere<int>('bingo_card_id', (f) => f==cardID);
+    final row = await csv.labelRow(rows.first);
+    final targetID = row['bingo_card_id'] as int;
     // 2. grab the card title
-    final targetTitle = csv[rowIdx][headerMap['bingo_card_title']] as String;
+    final targetTitle = row['bingo_card_title'] as String;
     // 3. build a list of activities
-    //  3.1. SELECT
-    //    id, location, title (subtitle is same), instructions, category
-    //  3.2. FROM
-    //  3.3. WHERE
-    //    'bingo_card_id' == targetID
-    // BAD ORDER, row ordered data, not columnar
-    var activityData = csv.where((row) => row[cardIdColumnIdx] == targetID);
-
-    // better be only 25, not less
-    var activities = List<OnCardActivity>.from(
-        activityData.map<OnCardActivity>((a) => OnCardActivity(
-          bingoCardID: targetID,
-          location: a[headerMap['location']] as int,
-          title: a[headerMap['title']] as String,
-          instructions: a[headerMap['instructions']] as String,
-          category: a[headerMap['category']] as String)
-        ),
-        growable: false);
-
+    final activities = await _fetchActivityList(rows);
     activities.sort(OnCardActivity.locationComparator);
 
     return BingoCard(
@@ -51,20 +41,29 @@ class CSVBingoCardRepository implements BingoCardRepository {
     );
   }
 
+  Future<List<OnCardActivity>> _fetchActivityList(List<List> filteredRows)
+    async
+  {
+    var activities = <OnCardActivity>[];
+    for (var row in filteredRows) {
+      final record = await csv.labelRow(row);
+      activities.add(_fetchActivity(record));
+    }
+    return activities;
+  }
+
+  OnCardActivity _fetchActivity(Map<String, dynamic> record) =>
+    OnCardActivity(
+      bingoCardID:  record['bingo_card_id']  as int,
+      location:     record['location']       as int,
+      title:        record['title']          as String,
+      instructions: record['instructions']   as String,
+      category:     record['category']       as String
+    );
+
   /// Infer recentness by picking the largest card ID used so far,
   /// returns the row where it is found
-  int _mostRecentBingoCardOrderedByID(List<List<dynamic>> csv) {
-    return 1; // Row index 1 has largest bingo_card_id
-  }
-
-  Map<String, int> _fieldLabels(List<List<dynamic>> csvData) {
-    final firstRow = List<String>.from(csvData[0]);
-    final idxValues = Iterable<int>.generate(firstRow.length);
-    return Map<String, int>.fromIterables(firstRow, idxValues);
-  }
-
-  Future<List<List<dynamic>>> csvData() async {
-    final srcFileData = await rootBundle.loadString(srcFilePath);
-    return const CsvToListConverter().convert(srcFileData);
+  int _mostRecentBingoCardOrderedByID() {
+    return 1; // just a dummy
   }
 }

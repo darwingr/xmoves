@@ -1,12 +1,14 @@
 import 'dart:async';
 
-import 'package:xmoves/application/repository_panel.dart';
+import 'package:xmoves/application/bingo_card_repository.dart';
 import 'package:xmoves/domain/bingo_card.dart';
 
 import 'output_boundary.dart';
 import 'response_model.dart';
 
 abstract class BingoCardInputBoundary {
+  BingoCardInputBoundary(BingoCardRepository repository);
+  Future<void> execute(BingoCardOutputBoundary presenter);
 }
 
 /// Input to be provided by the user,
@@ -17,11 +19,15 @@ abstract class BingoCardInputBoundary {
 ///   activity_matrix(activity_id, category, status),
 /// Processing steps involved in producing that output.
 class BingoCardUseCaseInteractor implements BingoCardInputBoundary  {
+  final BingoCardRepository _repository;
+
+  BingoCardUseCaseInteractor(this._repository);
+
   // TODO don't pass entity to presentation layer
   // TODO strip quotes chars from text on Activity.instructions
   @deprecated
   Future<BingoCard> playWithLatestBingoCard() async {
-    return RepositoryPanel.bingoCards.pickMostRecent();
+    return _repository.pickMostRecent();
   }
 
   //TODO should return Future of Success/Failure so the caller knows to not ask
@@ -29,7 +35,7 @@ class BingoCardUseCaseInteractor implements BingoCardInputBoundary  {
   Future<void> execute(BingoCardOutputBoundary presenter) async {
     // 1. Get BingoCard that is latest issue
     // 2. Get a List of all activities for the given BingoCard
-    var card = await RepositoryPanel.bingoCards.pickMostRecent();
+    var card = await _repository.pickMostRecent();
     var response = BingoCardResponseModel(card.title);
     for (var activity in card.activities) {
       var activitySummary = ActivitySummary();

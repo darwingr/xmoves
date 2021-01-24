@@ -5,6 +5,7 @@ import 'activity_progress.dart';
 
 class OnCardActivity extends Entity {
   final int bingoCardID;
+  //TODO change to storing row/column instead of location
   int get location => _location.to_int();
   String title;
   String instructions;

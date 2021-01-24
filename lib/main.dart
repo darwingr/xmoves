@@ -3,13 +3,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 
 import 'package:xmoves/infrastructure/csv_bingo_card_repository.dart';
-import 'package:xmoves/application/repository_panel.dart';
+import 'package:xmoves/application/repository_adapters.dart';
 
 import 'view/bingo_card_screen.dart';
 import 'theme.dart';
 
 void main() async {
-  RepositoryPanel.bingoCards = CSVBingoCardRepository();
+  WidgetsFlutterBinding.ensureInitialized(); // before accessing rootBundle
+  RepositoryAdapters.bingoCards = CSVBingoCardRepository.fromAssetBundle();
 
   runApp(MyApp());
 }
