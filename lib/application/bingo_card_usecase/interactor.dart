@@ -1,15 +1,11 @@
 import 'dart:async';
 
-import 'package:xmoves/application/bingo_card_repository.dart';
 import 'package:xmoves/domain/bingo_card.dart';
 
+import '../bingo_card_repository.dart';
+import 'input_boundary.dart';
 import 'output_boundary.dart';
 import 'response_model.dart';
-
-abstract class BingoCardInputBoundary {
-  BingoCardInputBoundary(BingoCardRepository repository);
-  Future<void> execute(BingoCardOutputBoundary presenter);
-}
 
 /// Input to be provided by the user,
 ///   card_id

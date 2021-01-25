@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 
 import 'package:xmoves/infrastructure/csv_bingo_card_repository.dart';
 import 'package:xmoves/application/repository_adapters.dart';
+import 'package:xmoves/presentation/bingo_card_bloc.dart';
 
 import 'view/bingo_card_screen.dart';
+import 'view/play_card_view.dart';
+import 'view/widgets/message_display_widget.dart';
 import 'theme.dart';
 
 void main() async {
@@ -66,54 +70,46 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
       body: getPage(_tabIndex),
-    );
+      bottomNavBar: PlatformNavBar(
+          currentIndex:
+            _tabIndex,
+            itemChanged: (index) => setState(() => _tabIndex = index ),
+          backgroundColor: Colors.white,
+          items: [
+            BottomNavigationBarItem(
+              label: 'Bingo (Old)',
+              icon:       Icon(Icons.apps, color: Colors.grey),
+              activeIcon: Icon(Icons.apps, color: Colors.blue),
+            ),
+            BottomNavigationBarItem(
+              label: 'The Feed',
+              icon:       Icon(Icons.rss_feed, color: Colors.grey),
+              activeIcon: Icon(Icons.rss_feed, color: Colors.blue),
+            ),
+            BottomNavigationBarItem(
+              label: 'Bingo',
+              icon:       Icon(Icons.apps, color: Colors.grey),
+              activeIcon: Icon(Icons.apps, color: Colors.white),
+            ),
+          ]));
   }
 
   Widget getPage(int tabIndex) {
-    return BingoCardScreen();
-  }
-
-  Widget _buildWithPlatformNavBar(BuildContext context) {
-    return PlatformScaffold(
-        appBar: PlatformAppBar(
-          // Here we take the value from the MyHomePage object that was created
-          // by the App.build method, and use it to set our appbar title.
-          title: Text(widget.title, style: toolbarTextStyle),
-          cupertino: (_, __) => CupertinoNavigationBarData(
-            transitionBetweenRoutes: false,
-            trailing: PlatformButton(
-              padding: EdgeInsets.all(4.0),
-              child: Icon(Icons.add, color: Colors.white),
-              onPressed: () {
-                Navigator.push(
-                    context,
-                    platformPageRoute<Widget>(
-                        builder: (context) => BingoCardScreen(),
-                        context: context));
-              },
-            ),
-          ),
-        ),
-        body: getPage(_tabIndex),
-        bottomNavBar: PlatformNavBar(
-            currentIndex: _tabIndex,
-            itemChanged: (index) {
-              setState(() {
-                _tabIndex = index;
-              });
-            },
-            backgroundColor: Colors.blue,
-            items: [
-              BottomNavigationBarItem(
-                icon: Icon(Icons.apps, color: Colors.grey),
-                title: Text('Bingo', style: bottomNavTextStyle),
-                activeIcon: Icon(Icons.business, color: Colors.white),
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.rss_feed, color: Colors.grey),
-                title: Text('The Feed', style: bottomNavTextStyle),
-                activeIcon: Icon(Icons.person, color: Colors.white),
-              ),
-            ]));
+    switch (tabIndex) {
+      case (0):
+        return BingoCardScreen();
+      case (1):
+        return MessageDisplay(message: "Placeholder For Blog Feed");
+      case (2):
+        return BlocProvider(
+            create: (context) =>
+                BingoCardBloc(repo: RepositoryAdapters.bingoCards)
+                  ..add(BingoCardLoaded()),
+            child: PlayCardView(),
+        );
+      default:
+        return MessageDisplay(
+            message: "Navigation Index Error: No Widget Configured");
+    }
   }
 }

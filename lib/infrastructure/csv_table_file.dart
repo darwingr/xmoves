@@ -80,33 +80,3 @@ class _Attribute {
     }
   }
 }
-
-
-/*
-var labels = <String, int>{'field1': 0};
-List<List<String>> tbl = [
-  ['a', "wrong1", "wrong3"],
-  ['b', "answer1",  "wrong3"],
-  ['a', "answer1",  "wrong3"]
-];
-
-Iterable<List> filter2<T>(
-    String header,
-    Discriminator<T> fd)
-{
-  var attr = _Attribute(header, labels);
-  //_RowField<T> fieldForRow = (row) => row[attr.column] as T;
-
-  //_RowDiscriminator rowDiscriminator = (row) {
-  //  T fieldValue = fieldForRow(row);
-  //  return fd(fieldValue);
-  //};
-  //var rowDiscriminator = (List row) => fd(fieldForRow(row));
-
-  //return tbl.where(rowDiscriminator);
-  return tbl.where( (row) => fd(row[attr.column] as T) );
-}
-
-// filter by 'field1' == 'b'
-Iterable<List> result = filter2<String>('field1', (field) => field == "a");
-*/
