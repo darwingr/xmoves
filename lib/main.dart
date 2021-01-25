@@ -89,7 +89,7 @@ class _MyHomePageState extends State<MyHomePage> {
             BottomNavigationBarItem(
               label: 'Bingo',
               icon:       Icon(Icons.apps, color: Colors.grey),
-              activeIcon: Icon(Icons.apps, color: Colors.white),
+              activeIcon: Icon(Icons.apps, color: Colors.blue),
             ),
           ]));
   }
