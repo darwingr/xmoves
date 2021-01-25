@@ -1,3 +1,4 @@
+import 'package:meta/meta.dart';
 import 'package:collection/collection.dart';
 
 const DeepCollectionEquality _equality = DeepCollectionEquality();
@@ -18,11 +19,14 @@ const DeepCollectionEquality _equality = DeepCollectionEquality();
     - should follow safe-construction by default, like RAII,
       therefore try to avoid null initialization.
 */
-class Entity {
-  final id;
+class Entity<T extends Object> {
+  @protected  // by default
+  @visibleForTesting
+  final T id;
 
   const Entity({this.id});
 
+  /// identifiers define what make an entity unique
   List<Object> get identifiers => [id];
 
   // Use separate comparison than == for comparing identifiers,
@@ -30,7 +34,7 @@ class Entity {
   // nor is requiring that it be immutable, which it shouldn't.
   bool isSame(Entity entity) =>
     identical(this, entity) ||
-      entity is Entity &&
+      entity is Entity<T> &&
         runtimeType == entity.runtimeType &&
         _equals(identifiers, entity.identifiers);
 

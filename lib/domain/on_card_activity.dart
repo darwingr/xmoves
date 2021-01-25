@@ -6,7 +6,7 @@ import 'activity_progress.dart';
 class OnCardActivity extends Entity {
   final int bingoCardID;
   //TODO change to storing row/column instead of location
-  int get location => _location.to_int();
+  int get location => _location.toInt();
   String title;
   String instructions;
   // TODO activity category should be a value object, avoid invalid category by
@@ -52,7 +52,7 @@ class OnCardLocation {
         assert(location ~/ 10 != 0),
         _location = location;
 
-  int to_int() => _location;
+  int toInt() => _location;
 
   final int _location;
 }
